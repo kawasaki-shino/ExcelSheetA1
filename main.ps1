@@ -1,6 +1,12 @@
 ﻿# 対象のExcelを取得
 $path = Read-Host "フォルダーまたはExcelファイルを指定してください"
 $list = Get-ChildItem -Path $path -Filter *.xlsx -Recurse -File
+$total = ($list | ? { ! $_.PsIsContainer }).Count
+
+if ($total -eq 0){
+    Write-Host '指定されたフォルダーに「.xlsx」のファイルが見つからないか、指定されたファイルが「.xlsx」ではありません。処理を中断します。'
+    exit
+}
 
 # Excel開いて、高速化設定
 $excel = New-Object -ComObject Excel.Application
@@ -17,7 +23,6 @@ foreach ($file in $list){
 
     # 進捗表示
     $counter ++;
-    $total = ($list | ? { ! $_.PsIsContainer }).Count
     $status = $counter.ToString() + "/" + $total.ToString()
     $per = $counter / $total * 100
             
