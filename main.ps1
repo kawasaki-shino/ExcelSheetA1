@@ -19,7 +19,7 @@ $excel.EnableEvents = $false
 foreach ($file in $list){
 
     # ブックを開く
-    $book = $excel.Workbooks.Open($file.FullName)
+    $book = $excel.Workbooks.Open($file.FullName, [Type]::Missing, [Type]::Missing, [Type]::Missing, [Type]::Missing, [Type]::Missing, $true)
 
     # 進捗表示
     $counter ++;
